@@ -1,1 +1,0 @@
-export * as HandlerConfig from "./handler.config";

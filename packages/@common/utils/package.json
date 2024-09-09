@@ -1,9 +1,10 @@
 {
-  "name": "utils",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "@common/utils",
+  "version": "0.0.0",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build":"npx tsc",
+    "test": "npx jest --watchAll=false --coverage --forceExit"
   },
   "keywords": [],
   "author": "",

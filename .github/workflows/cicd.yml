@@ -36,6 +36,9 @@ jobs:
     
     steps:
     - uses: actions/checkout@v3
+
+    - name: Checkout to the _iac directory
+      run: cd _iac
     
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2

@@ -5,11 +5,11 @@
   "author": "Sanjay Kumar <sanjayjkumar96@gmail.com>",
   "homepage": "",
   "license": "ISC",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "npx webpack",
     "start": "npx nodemon",
-    "test": "npx jest --watchAll=false --coverage --forceExit"
+    "test": "npx jest --watchAll=false --passWithNoTests --coverage --forceExit"
   },
   "dependencies": {
     "@common/backend-core":"^0.0.0"

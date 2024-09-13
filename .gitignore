@@ -1,2 +1,17 @@
+# Node production
 node_modules/
 dist/
+report.html
+coverage/
+
+# Terraform
+.terraform/
+.terraform.tfstate.d/
+.terraform.lock.hcl
+tfplan
+tfplan.txt
+*.tfvars
+*.tfstate
+
+*.tfstate.backup
+.aws/

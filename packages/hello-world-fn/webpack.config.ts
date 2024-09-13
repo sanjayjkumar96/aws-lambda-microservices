@@ -4,11 +4,13 @@ import { resolve } from "path";
 
 export default {
     mode: "production",
+    target: "node",
     output: {
         path: resolve(__dirname, "../../dist/hello-world-fn"),
         filename: "index.js",
         libraryTarget: "commonjs2"
     },
+    externals: /@aws-sdk\//,
     module: {
         rules: [
             {
@@ -26,5 +28,9 @@ export default {
             analyzerMode: "static",
             openAnalyzer: false
         })
-    ]
+    ],
+    optimization: {
+        minimize: false,
+        nodeEnv: false
+    }
 } as Configuration;

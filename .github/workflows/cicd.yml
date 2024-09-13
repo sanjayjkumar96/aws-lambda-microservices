@@ -37,17 +37,17 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Checkout to the _iac directory
-      run: cd _iac
-    
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v2
+      uses: hashicorp/setup-terraform@v2 
       
     - name: Terraform Init
       run: terraform init
+      working-directory: ./_iac
       
     - name: Terraform Plan
       run: terraform plan
+      working-directory: ./_iac
       
     - name: Terraform Apply
       run: terraform apply --auto-approve
+      working-directory: ./_iac

@@ -33,6 +33,12 @@ jobs:
   terraform:
     needs: build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./_iac
+    env:
+      TF_VAR_environment: dev
+      TF_VAR_app_version: 1.0.0
     
     steps:
     - uses: actions/checkout@v3
@@ -42,12 +48,9 @@ jobs:
       
     - name: Terraform Init
       run: terraform init
-      working-directory: ./_iac
       
     - name: Terraform Plan
       run: terraform plan
-      working-directory: ./_iac
       
     - name: Terraform Apply
       run: terraform apply --auto-approve
-      working-directory: ./_iac

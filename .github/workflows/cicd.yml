@@ -7,7 +7,7 @@ on:
     branches: [ master ]
   workflow_dispatch:
     inputs:
-      destroy:
+      terraform-destroy:
         description: 'Destroy infrastructure'
         required: true
         default: false
@@ -17,7 +17,7 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    
+    if: github.event.inputs.terraform-destroy == false
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js
@@ -51,7 +51,7 @@ jobs:
     env:
       TF_VAR_environment: dev
       TF_VAR_app_version: 1.0.0
-    if: github.event.inputs.destroy == false
+    if: github.event.inputs.terraform-destroy == false
     steps:
     - uses: actions/checkout@v3
     - name: Download dist directory

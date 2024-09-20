@@ -10,7 +10,8 @@ on:
       destroy:
         description: 'Destroy infrastructure'
         required: true
-        default: 'true'
+        default: false
+        type: boolean
 
 jobs:
 
@@ -50,7 +51,7 @@ jobs:
     env:
       TF_VAR_environment: dev
       TF_VAR_app_version: 1.0.0
-    if: github.event.inputs.destroy == 'false'
+    if: github.event.inputs.destroy == false
     steps:
     - uses: actions/checkout@v3
     - name: Download dist directory
@@ -82,7 +83,7 @@ jobs:
     env:
       TF_VAR_environment: dev
       TF_VAR_app_version: 1.0.0
-    if: github.event.inputs.destroy == 'true'
+    if: github.event.inputs.destroy == true
 
     steps:
     - uses: actions/checkout@v3

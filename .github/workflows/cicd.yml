@@ -10,7 +10,7 @@ on:
       destroy:
         description: 'Destroy infrastructure'
         required: true
-        default: 'false'
+        default: 'true'
 
 jobs:
 
@@ -41,7 +41,7 @@ jobs:
         name: dist
         path: dist
 
-  terraform:
+  terraform-deploy:
     needs: build
     runs-on: ubuntu-latest
     defaults:
@@ -50,6 +50,7 @@ jobs:
     env:
       TF_VAR_environment: dev
       TF_VAR_app_version: 1.0.0
+    if: github.event.inputs.destroy == 'false'
     steps:
     - uses: actions/checkout@v3
     - name: Download dist directory
@@ -73,15 +74,7 @@ jobs:
       
     - name: Terraform Apply
       run: terraform apply --auto-approve
-    - uses: trstringer/manual-approval@v1
-      with:
-        approvers: sanjayjkumar96
-        minimum-approvals: 1
-        issue-title: "Terraform Destroy after Approval"
-        exclude-workflow-initiator-as-approver: false
-    - name: Terraform Destroy 
-      run: terraform destroy --auto-approve
-  destroy:
+  terraform-destroy:
     runs-on: ubuntu-latest
     defaults:
       run:

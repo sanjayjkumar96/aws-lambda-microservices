@@ -51,7 +51,6 @@ jobs:
       with:
         name: dist
         path: dist
-    - uses: ls -R
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2 
     - name: Configure AWS credentials

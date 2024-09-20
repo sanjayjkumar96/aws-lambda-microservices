@@ -5,6 +5,12 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  workflow_dispatch:
+    inputs:
+      destroy:
+        description: 'Destroy infrastructure'
+        required: true
+        default: 'false'
 
 jobs:
 
@@ -75,3 +81,34 @@ jobs:
         exclude-workflow-initiator-as-approver: false
     - name: Terraform Destroy 
       run: terraform destroy --auto-approve
+  destroy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./_iac
+    env:
+      TF_VAR_environment: dev
+      TF_VAR_app_version: 1.0.0
+    if: github.event.inputs.destroy == 'true'
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-south-1
+
+    - name: Terraform Init
+      run: terraform init -backend-config="backend-config/dev.tf"
+
+    - name: Terraform Plan Destroy
+      run: terraform plan -destroy -out=tfplan
+
+    - name: Terraform Destroy
+      run: terraform apply -auto-approve tfplan

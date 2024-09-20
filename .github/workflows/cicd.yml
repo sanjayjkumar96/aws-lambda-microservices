@@ -29,6 +29,11 @@ jobs:
       
     - name: Test
       run: npm test
+    - name: Upload dist directory
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist
+        path: dist
 
   terraform:
     needs: build
@@ -41,6 +46,12 @@ jobs:
       TF_VAR_app_version: 1.0.0
     steps:
     - uses: actions/checkout@v3
+    - name: Download dist directory
+      uses: actions/download-artifact@v3
+      with:
+        name: dist
+        path: dist
+    - uses: ls -R
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2 
     - name: Configure AWS credentials
@@ -50,7 +61,7 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-south-1
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -backend-config="backend-config/dev.tf"
       
     - name: Terraform Plan
       run: terraform plan

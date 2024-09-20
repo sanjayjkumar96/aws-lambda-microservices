@@ -79,7 +79,7 @@ jobs:
     env:
       TF_VAR_environment: dev
       TF_VAR_app_version: 1.0.0
-    if: github.event.inputs.destroy == true
+    if: github.event.inputs.destroy == 'true'
 
     steps:
     - uses: actions/checkout@v3
